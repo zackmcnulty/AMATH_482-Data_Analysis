@@ -14,18 +14,18 @@ k=(2*pi/(2*L))*[0:(n/2-1) -n/2:-1]; ks=fftshift(k);
 
 total_t = zeros(n,n,n);
 
-for j=1:20 % for each realization of data
-   Un(:,:,:)=reshape(Undata(j,:),n,n,n);
-   figure(1)
-   close all, isosurface(X,Y,Z,abs(Un), 0.4)
-   axis([-20 20 -20 20 -20 20]), grid on, drawnow
-   title('Unfiltered Signal in Spatial Domain')
-   xlabel('X')
-   ylabel('Y')
-   zlabel('Z')
-   set(gca, 'fontsize', 20)
-   pause(2)
-end
+% for j=1:20 % for each realization of data
+%    Un(:,:,:)=reshape(Undata(j,:),n,n,n);
+%    figure(1)
+%    close all, isosurface(X,Y,Z,abs(Un), 0.4)
+%    axis([-20 20 -20 20 -20 20]), grid on, drawnow
+%    title('Unfiltered Signal in Spatial Domain')
+%    xlabel('X')
+%    ylabel('Y')
+%    zlabel('Z')
+%    set(gca, 'fontsize', 20)
+%    pause(2)
+% end
 
 %% Averaging of the spectrum
 
@@ -61,6 +61,7 @@ zc = Kz(ind2);
 
 
 %% Filtering of the spectrum
+close all; clc;
 
 tau = 0.35; % filtering bandwidth
 
@@ -90,6 +91,7 @@ for j=1:20 % for each realization of data
    
    isosurface(X,Y,Z, abs(Unf), 0.4)
    axis([-20 20 -20 20 -20 20]), grid on, drawnow
+   hold on;
    title('Filtered Signal in Spatial Domain', 'fontsize' , 20)
    xlabel('X', 'fontsize' , 20);
     ylabel('Y', 'fontsize' , 20);
@@ -103,6 +105,7 @@ for j=1:20 % for each realization of data
     saveas(gcf, strcat('images/marble_iso', num2str(j), '.jpg'));
     
     if j == 20
+       figure(4)
        view(0,90) % XY
        saveas(gcf, strcat('images/marble_XY.jpg'));
        view(0,0) % XZ
@@ -116,7 +119,7 @@ end
 %%
 final_marble_coordinate_xyz = marble_coords(end, :)
 
-figure (3)
+figure (2)
 plot3(marble_coords(:, 1), marble_coords(:,2), marble_coords(:, 3), 'ro'), grid on;
 hold on;
 plot3(marble_coords(:, 1), marble_coords(:,2), marble_coords(:, 3), 'b')
