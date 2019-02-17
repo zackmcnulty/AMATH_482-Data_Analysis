@@ -8,7 +8,8 @@ function [all_x,all_y] = get_xy_coords(video, xrange, yrange, var_scale, max_pix
 % max_pixel_val: filters the pixels by color, looking for pixels with
 %                grayscale color above this value.
 
-% xrange & yrange: describe where to look for the bucket it
+% xrange & yrange: describe where to look for the bucket it in pixelspace
+%                  chosen manually after viewing unfiltered points
 
 % plots: logical vector for which describing which figures to show
 

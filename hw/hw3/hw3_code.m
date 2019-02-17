@@ -78,11 +78,44 @@ load('camera_files/cam3_2.mat')
 
 
 %% Camera 1 part 2
+close all; clc; 
+
+video = vidFrames1_2;
+xrange = [300, 400];
+yrange = [225, 400];
+var_scale = 1;
+max_pixel_val = 250;
+plots = [0 0 1 1 1 1];
+
+[x1_2, y1_2] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
+
 
 %% Camera 2 part 2
+close all; clc; 
+
+video = vidFrames2_2;
+xrange = [175, 450];
+yrange = [50, 450];
+var_scale = 0;
+max_pixel_val = 250;
+plots = [0 0 1 0 1 1];
+
+[x2_2, y2_2] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
+
+
+
 
 %% Camera 3 part 2
+close all; clc; 
 
+video = vidFrames3_2;
+xrange = [250, 500];
+yrange = [225, 300];
+var_scale = 0.1;
+max_pixel_val = 245;
+plots = [0 0 1 0 1 1];
+
+[x3_2, y3_2] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
 
 
 
@@ -96,10 +129,47 @@ load('camera_files/cam3_3.mat')
 
 
 %% Camera 1 part 3
+close all; clc; 
+
+video = vidFrames1_3;
+xrange = [250, 400];
+yrange = [200, 400];
+var_scale = 1;
+max_pixel_val = 250;
+plots = [0 0 1 0 1 1];
+
+[x1_3, y1_3] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
+
+
+
 
 %% Camera 2 part 3
+close all; clc; 
+
+video = vidFrames2_3;
+xrange = [200, 400];
+yrange = [175, 400];
+var_scale = 1;
+max_pixel_val = 240;
+plots = [0 0 1 0 1 1];
+
+[x2_3, y2_3] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
+
+
+
 
 %% Camera 3 part 3
+close all; clc; 
+
+video = vidFrames3_3;
+xrange = [250, 450];
+yrange = [175, 325];
+var_scale = 1;
+max_pixel_val = 245;
+plots = [0 0 1 0 1 1];
+
+[x3_3, y3_3] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
+
 
 
 
@@ -112,9 +182,44 @@ load('camera_files/cam2_4.mat')
 load('camera_files/cam3_4.mat')
 
 %% Camera 1 part 4
+close all; clc; 
+
+video = vidFrames1_4;
+xrange = [300, 450];
+yrange = [225, 400];
+var_scale = 1;
+max_pixel_val = 245;
+plots = [0 0 1 1 1 1];
+
+[x1_4, y1_4] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
+
+
 
 %% Camera 2 part 4
+close all; clc; 
+
+video = vidFrames2_4;
+xrange = [210, 400];
+yrange = [100, 350];
+var_scale = 1;
+max_pixel_val = 250;
+plots = [0 0 1 1 1 1];
+
+[x2_4, y2_4] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
+
+
 
 %% Camera 3 part 4
+close all; clc; 
+
+video = vidFrames3_4;
+xrange = [300, 500];
+yrange = [175, 250];
+var_scale = 0.7;
+max_pixel_val = 235;
+plots = [0 0 1 1 1 1];
+
+[x3_4, y3_4] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
+
 
 
