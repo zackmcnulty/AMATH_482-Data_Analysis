@@ -27,7 +27,7 @@ xrange = [300,400];
 yrange = [200,450];
 var_scale = 1;
 max_pixel_val = 250;
-plots = [0 0 0 0 1 1];
+plots = [0 0 0 0 0 0];
 
 [x1_1, y1_1] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
 
@@ -41,7 +41,7 @@ xrange = [250, 350];
 yrange = [100, 375];
 var_scale = 1;
 max_pixel_val = 250;
-plots = [0 0 0 0 1 1];
+plots = [0 0 0 0 0 0];
 
 [x2_1, y2_1] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
 
@@ -54,15 +54,26 @@ video = vidFrames3_1;
 xrange = [250, 500];
 yrange = [225, 325];
 var_scale = 1;
-max_pixel_val = 250;
-plots = [0 0 0 0 1 1];
+max_pixel_val = 240;
+plots = [0 0 0 0 0 0];
 
 [x3_1, y3_1] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
 
+%% Principal Component Analysis part 1
+close all; clc;
 
+rank_approx = 1;
+A = my_pca(rank_approx, x1_1, y1_1, x2_1, y2_1, x3_1, y3_1);
 
-
-
+figure(2)
+subplot(221)
+plot(y1_1)
+subplot(222)
+plot(x1_1)
+subplot(223)
+plot(A(2,:))
+subplot(224)
+plot(A(1,:))
 
 
 
@@ -85,7 +96,7 @@ xrange = [300, 400];
 yrange = [225, 400];
 var_scale = 1;
 max_pixel_val = 250;
-plots = [0 0 1 1 1 1];
+plots = [0 0 0 0 0 0];
 
 [x1_2, y1_2] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
 
@@ -98,7 +109,7 @@ xrange = [175, 450];
 yrange = [50, 450];
 var_scale = 0;
 max_pixel_val = 250;
-plots = [0 0 1 0 1 1];
+plots = [0 0 0 0 0 0];
 
 [x2_2, y2_2] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
 
@@ -113,9 +124,19 @@ xrange = [250, 500];
 yrange = [225, 300];
 var_scale = 0.1;
 max_pixel_val = 245;
-plots = [0 0 1 0 1 1];
+plots = [0 0 0 0 0 0];
 
 [x3_2, y3_2] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
+
+
+
+
+%% Principal Component Analysis part 2
+close all; clc;
+
+my_pca(x1_2, y1_2, x2_2, y2_2, x3_2, y3_2);
+
+
 
 
 
@@ -171,7 +192,11 @@ plots = [0 0 1 0 1 1];
 [x3_3, y3_3] = get_xy_coords(video, xrange, yrange, var_scale, max_pixel_val, plots);
 
 
+%% Principal Component Analysis part 3
 
+close all; clc;
+
+my_pca(x1_3, y1_3, x2_3, y2_3, x3_3, y3_3);
 
 
 %% Part 4: Horizontal Displacement AND Rotation
@@ -223,3 +248,7 @@ plots = [0 0 1 1 1 1];
 
 
 
+%% Principal Component Analysis part 2
+close all; clc;
+
+my_pca(x1_4, y1_4, x2_4, y2_4, x3_4, y3_4);
