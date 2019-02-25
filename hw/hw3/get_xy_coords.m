@@ -14,6 +14,10 @@ function [all_x,all_y] = get_xy_coords(video, xrange, yrange, var_scale, max_pix
 % plots: logical vector for which describing which figures to show
 
 
+
+% Video loading taken from page 120 of class notes with slight
+% modifications
+
 numFrames = size(video, 4);
 all_x = [];
 all_y = [];
@@ -43,7 +47,8 @@ for j=1:numFrames
     D = uint8(all_Xg(:,:,j));
     
     % filter pixels by color (in this frame) and by their variance (over
-    % course of the entire film)
+    % course of the entire film). Filtering by variance helps eliminate
+    % stationary bright points in the background of the film.
     % points that meet the given criteria
     
     points = logical((all_variances > var_scale*mean_var) .* (D >= max_pixel_val));
@@ -60,8 +65,15 @@ for j=1:numFrames
     
     % only take points that are both within yrange AND xrange
     filtered_points = [x_vals(logical(filtered_y.*filtered_x)),  y_vals(logical(filtered_x.*filtered_y))];
-    ave_x = mean(filtered_points(:, 1));
-    ave_y = mean(filtered_points(:, 2));
+    
+    % If you cannot find any points, just use last points location.
+    if isempty(filtered_points)
+        ave_x = all_x(j-1);
+        ave_y = all_y(j-1);
+    else
+        ave_x = mean(filtered_points(:, 1));
+        ave_y = mean(filtered_points(:, 2));
+    end
     
     all_x = [all_x, ave_x];
     all_y = [all_y, ave_y];
@@ -104,6 +116,7 @@ for j=1:numFrames
         ylim([0, 480]);
         zlim([0, numFrames]);
         hold on;
+        set(gca, 'fontsize', 20);
     end
     
     if plots(4) == 1
@@ -112,7 +125,7 @@ for j=1:numFrames
         plot3(filtered_points(:,1), filtered_points(:,2), j*ones(1,length(filtered_points)), 'r.'), grid on;
         hold on
         % also plot "averaged" point
-        plot3(ave_x, ave_y, j, 'ko')
+        %plot3(ave_x, ave_y, j, 'ko')
         xlabel("X")
         ylabel("Y")
         title("filtered points")
@@ -121,6 +134,7 @@ for j=1:numFrames
         ylim([0, 480]);
         zlim([0, numFrames]);
         hold on;
+        set(gca, 'fontsize', 20);
     end
     
     if plots(5) == 1
@@ -135,17 +149,20 @@ for j=1:numFrames
         ylim([0, 480]);
         zlim([0, numFrames]);
         hold on;
+        set(gca, 'fontsize', 20);
+        
     end
     
     if plots(6) == 1
         figure(6)
         all_Xg(round(ave_y)-5:round(ave_y)+5, round(ave_x)-5:round(ave_x)+5, j) = 0;
         imshow(uint8(all_Xg(:,:, j)))
+        text(50,100, strcat("Frame Number: ", num2str(j)), 'fontsize', 20, 'BackgroundColor', 'white')
+        %pause(0.5)
     end
     
-    drawnow
+    
 end
-
 
 end
 
