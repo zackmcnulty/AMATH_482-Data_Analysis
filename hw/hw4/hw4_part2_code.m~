@@ -143,7 +143,7 @@ clc;
 
 % In this case, as our data measurements are stored as rows, the columns of
 % V store the fundamental structure/modes of our system (they form a basis
-% for our domain : frequency / music space) while the columns of U*Sigma give the
+% for our domain : frequency / music space) while the columns of U give the
 % coordinates of each data measurement (i.e. each song) within this
 % frequency space. Thus, these coordinates define the underlying structure
 % of our system and we can use them to classify.
@@ -164,15 +164,12 @@ for j = 1:length(validation_labels)
     % since our model was trained on the coordinates given by U which are the coordinates
     % of our data with respect to the basis V (for frequency space), we have to
     % to get the coordinates of our validation data with respect to this
-    % basis: V * coordinates_in_V = data. Since V is unitary, this yields
-    % simply: coordinates_in_V = V' * data
+    % basis: V * data = coordinates_in_V
     
-    next_song = validation_data(j, :).';
-    coordinates_in_V = v'* next_song;
+    next_song = validation_data(j, :);
+    coordinates_in_V = V \ next_song;
     
-    % we only used the first r = rank coordinates to determine our
-    % classification so we again do that.
-    prediction = predict(Mdl,abs(coordinates_in_V(1:rank)).'); 
+    prediction = predict(Mdl,abs(validation_data(j, :))); 
     actual = validation_labels(j);
     if prediction == actual
        correct_predictions = correct_predictions + 1 ;
