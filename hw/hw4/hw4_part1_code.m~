@@ -57,18 +57,16 @@ for j = 1:length(folders)
 end
 
 % Demean the data
-mean_ave = mean(F_ave, 2);
-F_ave = F_ave - mean_ave;
-mean_F = mean(F,2);
-F = F - mean_F;
+F_ave = F_ave - mean(F_ave,2);
+F = F - mean(F, 2);
 
 imheight = size(face,1);
 imwidth = size(face,2);
 
 %% Calculate the Singular Value Decomposition
 
-%[u, s, v] = svd(F_ave, 'econ');
-[u2, s2, v2] = svd(F, 'econ');
+[u, s, v] = svd(F_ave, 'econ');
+%[u2, s2, v2] = svd(F, 'econ');
 
 
 %% Interpretation of U, Sigma, V
@@ -78,7 +76,6 @@ U = u;
 S = s;
 V = v;
 X = F_ave;
-m = mean_ave;
 
 %%
 % The columns of U represent an orthogonal basis for the codomain of our data matrix X.
@@ -131,7 +128,7 @@ energy = 0;
 total = sum(diag(S));
 % how much energy we want our modes to capture.
 % 75% does alright; 90% does very good.
-threshold = 0.30; 
+threshold = 0.1; 
 r = 0;
 while energy < threshold
     r = r + 1;
@@ -141,6 +138,8 @@ end
 
 %% rank r approximation of face space
 
+rank = r;
+
 % low-rank approximation of our faces stored in F.
 X_r = U(:, 1:rank) * S(1:rank, 1:rank) * (V(:, 1:rank)');
 
@@ -149,13 +148,9 @@ faces_to_plot = 10;
 for j = 1:faces_to_plot
 figure (5)
 subplot(211)
-imshow(uint8(reshape(X_r(:, j) + m, imheight, imwidth)));
-title(strcat("Rank ", num2str(rank), " approximation"))
-set(gca, 'fontsize', 15);
+imshow(uint8(reshape(X_r(:, j), imheight, imwidth)));
 subplot(212)
-imshow(uint8(reshape(X(:, j) + m, imheight, imwidth)));
-title('Original Image')
-set(gca, 'fontsize', 15);
+imshow(uint8(reshape(X(:, j), imheight, imwidth)));
 end
 
 
@@ -205,10 +200,8 @@ for j = 1:length(folders)
 end
 
 % Demean data?
-mean_ave = mean(F_ave, 2);
-F_ave = F_ave - mean_ave;
-mean_f = mean(F, 2);
-F = F - mean(F);
+% F = F - mean(F);
+% F2 = F2 - mean(F2);
 
 imheight = size(face,1);
 imwidth = size(face,2);
@@ -226,10 +219,8 @@ U = u2;
 S = s2;
 V = v2;
 X = F;
-m = mean_f;
 
 
-%%
 % The columns of U represent an orthogonal basis for the codomain of our data matrix X.
 % Not just any basis, however, the BEST basis for the space where each
 % successive column captures as much of the variance in the data as
@@ -244,31 +235,27 @@ m = mean_f;
 % face space. What linear combination of these principal components
 % (outputted by the code below).
 
-num_faces = 5;
-for col = 1:num_faces
+for col = 1:size(U, 2)
    figure(2)
    
-   subplot(1, num_faces, col)
    next_face = reshape(U(:, col), [imheight, imwidth]);
    pcolor(flipud(next_face)), shading interp, colormap(gray);
-   title(strcat("Principal Component ", num2str(col)));
-   set(gca,'xticklabel',[])
-   set(gca,'yticklabel',[])
-   set(gca, 'fontsize', 15)
-end
 
+   %pause(2);
+end
 
 
 
 %% Plot singular Values
 
 figure(4)
-plot(diag(S) ./ max(diag(S)), 'r.', 'markersize', 20);
+plot(diag(S) ./ max(diag(S)), 'r.', 'markersize', 20)
+xticks(1:round(length(S)/10):length(S))
 ylim([0,1])
 title('Normalized Singular Values')
 ylabel('\sigma_j')
 xlabel('index (j)')
-set(gca, 'fontsize', 20);
+
 %% Choosing rank r
 
 % We will choose the r that captures at least 90% of the energy of the
@@ -291,9 +278,9 @@ end
 rank = r;
 
 % low-rank approximation of our faces stored in F.
-X_r = U(:, 1:rank) * S(1:rank, 1:rank) * (V(:, 1:rank)') + m;
+X_r = U(:, 1:rank) * S(1:rank, 1:rank) * (V(:, 1:rank)');
 
-faces_to_plot = 10;
+faces_to_plot = 100;
 
 for j = 1:faces_to_plot
 figure (5)
@@ -301,7 +288,7 @@ subplot(211)
 imshow(uint8(reshape(X_r(:, j), imheight, imwidth)));
 title('Low rank approximation')
 subplot(212)
-imshow(uint8(reshape(X(:, j) + m, imheight, imwidth)));
+imshow(uint8(reshape(X(:, j), imheight, imwidth)));
 title("Original Image")
 pause(1);
 end
