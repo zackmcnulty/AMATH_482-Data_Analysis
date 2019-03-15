@@ -1,0 +1,9 @@
+.mp4 filter=lfs diff=lfs merge=lfs -text
+.mov filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+watermelon.mp4 filter=lfs diff=lfs merge=lfs -text
+bird2.mp4 filter=lfs diff=lfs merge=lfs -text
+birds.mp4 filter=lfs diff=lfs merge=lfs -text
+mythbusters.mp4 filter=lfs diff=lfs merge=lfs -text
+newtcradle.mp4 filter=lfs diff=lfs merge=lfs -text
+parallel_bars.mp4 filter=lfs diff=lfs merge=lfs -text
